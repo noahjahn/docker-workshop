@@ -1,0 +1,8 @@
+services:
+  bun:
+    image: oven/bun
+    user: bun:bun
+    ports:
+      - ${DOCS_MAPPED_PORT:-5173}:5173
+    volumes:
+      - ./:/home/bun/app
