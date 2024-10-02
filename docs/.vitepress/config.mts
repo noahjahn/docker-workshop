@@ -10,7 +10,58 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Docker workshop',
-        items: [{ text: 'Begin', link: '/begin' }],
+        items: [
+          {
+            text: 'Introduction',
+            link: '/introduction',
+            items: [{ text: 'Prerequisites', link: '/prerequisites' }],
+          },
+          {
+            text: 'Docker CLI',
+            link: '/cli',
+          },
+          {
+            text: 'Shell script wrapping',
+            link: '/shell',
+          },
+          {
+            text: 'Docker Desktop GUI',
+            link: '/desktop',
+          },
+          {
+            text: 'Dockerfiles',
+            link: '/dockerfiles',
+          },
+          {
+            text: 'Docker networking',
+            link: '/networking',
+          },
+          {
+            text: 'Docker compose',
+            link: '/compose',
+          },
+          {
+            text: 'Docker context',
+            link: '/context',
+          },
+        ],
+      },
+      {
+        text: 'Examples',
+        items: [
+          {
+            text: 'Vitepress docs',
+            link: '/vitepress',
+          },
+          {
+            text: 'Node.js example',
+            link: '/nodejs',
+          },
+          {
+            text: 'Python example',
+            link: '/python',
+          },
+        ],
       },
     ],
 
