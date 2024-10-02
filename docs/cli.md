@@ -148,7 +148,7 @@ We can run the `docs:dev` script using [`bun run`](https://bun.sh/docs/cli/run#r
 docker run --rm -v ./:/home/bun/app --user $UID oven/bun docs:dev
 ```
 
-Once the docs build, the server will say that it's running on port 5173. But, if you try to go to http://localhost:5173/ in your browser, you won't see anything running there. The reason being is we haven't mapped the required ports between the host computer and the container that is executing.
+Once the docs build, the server will say that it's running on port 5173. But, if you try to go to http://localhost:5173 in your browser, you won't see anything running there. The reason being is we haven't mapped the required ports between the host computer and the container that is executing.
 
 You can `ctrl+c` or `cmd+c` to send the interrupt to stop the container
 
