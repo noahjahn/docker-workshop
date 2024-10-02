@@ -71,14 +71,3 @@ All of these can be run in a Docker container. And the best thing yet is the pro
 - Scalability
 
 All of these benefits increase developer productivity. Less time is wasted setting up project or trying to reproduce what typically might be an environment specific bug.
-
-## Resources
-
-### What is containerization?
-
-- From Docker: https://www.docker.com/resources/what-container/
-- From IBM: https://www.ibm.com/topics/containerization
-
-### What is Docker?
-
-https://docs.docker.com/get-started/docker-overview/

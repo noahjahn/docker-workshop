@@ -37,3 +37,14 @@
 :::tip
 There are some nice extensions, like the [Docker](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-docker) extension, to interface with Docker right inside VSCode
 :::
+
+## Resources
+
+### What is containerization?
+
+- From Docker: https://www.docker.com/resources/what-container/
+- From IBM: https://www.ibm.com/topics/containerization
+
+### What is Docker?
+
+https://docs.docker.com/get-started/docker-overview/
