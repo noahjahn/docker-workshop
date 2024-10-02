@@ -65,7 +65,7 @@ export default defineConfig({
       },
     ],
     socialLinks: [
-      { icon: 'github', link: 'git@github.com:noahjahn/docker-workshop.git' },
+      { icon: 'github', link: 'https://github.com/noahjahn/docker-workshop' },
     ],
     search: {
       provider: 'local',
