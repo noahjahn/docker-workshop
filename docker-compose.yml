@@ -1,6 +1,8 @@
 services:
   bun:
-    image: oven/bun
+    build:
+      context: .
+      dockerfile: Dockerfile
     user: bun:bun
     ports:
       - ${DOCS_MAPPED_PORT:-5173}:5173

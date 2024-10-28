@@ -68,4 +68,5 @@ export default defineConfig({
     },
   },
   ignoreDeadLinks: 'localhostLinks',
+  lastUpdated: true,
 });

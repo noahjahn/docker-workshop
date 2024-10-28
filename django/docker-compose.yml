@@ -1,0 +1,16 @@
+services:
+  python:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    user: python
+    ports:
+      - 8000:8000
+    volumes:
+      - ./:/home/python/app
+      - pip-cache:/home/python/.cache
+      - pip-local:/home/python/.local
+
+volumes:
+  pip-cache:
+  pip-local:

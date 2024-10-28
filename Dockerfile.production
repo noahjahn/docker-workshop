@@ -1,0 +1,16 @@
+FROM oven/bun AS build
+
+RUN apt update && apt install -y git
+
+ADD jsconfig.json /home/bun/app/jsconfig.json
+ADD bun.lockb /home/bun/app/bun.lockb
+ADD package.json /home/bun/app/package.json
+ADD docs /home/bun/app/docs
+
+RUN bun i
+
+RUN bun docs:build
+
+FROM nginx
+
+COPY --from=build /home/bun/app/docs/.vitepress/dist /usr/share/nginx/html

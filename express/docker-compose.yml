@@ -1,0 +1,10 @@
+services:
+  node:
+    image: node:lts
+    user: node
+    ports:
+      - 3000:3000
+    init: true
+    working_dir: /home/node/app
+    volumes:
+      - ./:/home/node/app

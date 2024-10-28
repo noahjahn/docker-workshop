@@ -482,7 +482,7 @@ docker compose up -d
 docker compose logs -f || docker compose down
 ```
 
-After running `./start` the migrations should apply, and you should be able to create a superuser and login to the Django admin @ http://localhost/admin
+After running `./start` the migrations should apply, and you should be able to create a superuser and login to the Django admin @ http://localhost:8000/admin
 
 ```shell
 ./python python manage.py createsuperuser

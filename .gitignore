@@ -178,6 +178,4 @@ dist
 docs/.vitepress/dist
 docs/.vitepress/cache
 
-# Example projects
-django
-express
+db.sqlite3
