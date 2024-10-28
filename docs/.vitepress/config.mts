@@ -33,10 +33,6 @@ export default defineConfig({
             link: '/dockerfiles',
           },
           {
-            text: 'Docker networking',
-            link: '/networking',
-          },
-          {
             text: 'Docker compose',
             link: '/compose',
           },
