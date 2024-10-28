@@ -146,7 +146,7 @@ Now, we can run the docker run command with the `--user` flag
 docker run --rm -v ./:/home/bun/app --user $UID oven/bun i
 ```
 
-To confirm permissions are correct, run the `ls -al` command again and you should see the `node_modules` directory is created as your user.
+To confirm permissions are correct, run the `ls -al` command again, and you should see the `node_modules` directory is created as your user.
 
 ## Publish
 
@@ -200,7 +200,7 @@ docker run --rm -v ./:/home/bun/app -p 5173:5173 --user $UID -it oven/bun docs:d
 The `-it` flags often get used together.
 :::
 
-Now typing `h` with the vitepress container terminal in focus, should actually allow you to interact with the server.
+Now typing `h` with the Vitepress container terminal in focus, should actually allow you to interact with the server.
 
 ## Exec
 

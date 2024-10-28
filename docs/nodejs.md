@@ -35,7 +35,7 @@ docker run --rm -it node:lts ls -al /home
 docker run --rm -it node:lts whoami # root, though there is a node user we can use
 ```
 
-Node and Npm are both installed and accessible and the versions meet Express's requirements. There is a node user that we can use to execute commands in the container.
+Node and npm are both installed and accessible and the versions meet Express's requirements. There is a node user that we can use to execute commands in the container.
 
 ## Install Express
 
@@ -61,7 +61,7 @@ docker run --rm -w /home/node/app -v ./:/home/node/app --entrypoint=npm --user n
 
 Still following the Express guide, we can add the [Hello World](https://expressjs.com/en/starter/hello-world.html) example implementation.
 
-We can create an `app.js` file in the `express` directory.
+We can create a `app.js` file in the `express` directory.
 
 ```shell
 touch express/app.js
@@ -102,7 +102,7 @@ We can start making our lives a bit easier by setting up a docker compose file, 
 touch express/docker-compose.yml
 ```
 
-The `docker-compose.yml` file will have the following contents (derived from all of the flags that were being used in the previous `docker run` command)
+The `docker-compose.yml` file will have the following contents (derived from all the flags that were being used in the previous `docker run` command)
 
 ```yaml
 services:
@@ -116,7 +116,7 @@ services:
       - ./:/home/node/app
 ```
 
-Create the bin directory as well as two shell scripts that help us wrap running `npm` and any command in the node container service. The shell scripts need to be executable and we can make symlinks to them in the root of the `express` directory.
+Create the bin directory as well as two shell scripts that help us wrap running `npm` and any command in the node container service. The shell scripts need to be executable, and we can make symlinks to them in the root of the `express` directory.
 
 ```shell
 cd express

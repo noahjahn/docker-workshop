@@ -1,6 +1,6 @@
 # Python example
 
-To combine some of the different ideas and commands we've gone over, we're going to walk through setting up a Django project completely Dockerized from scratch. The goal here is to show case how we can take the implementations we talked about to other web technologies. There are going to be a few roadblocks along the way as well, they're left in here as a way to show _why_ the end result is the way it is.
+To combine some different ideas and commands we've gone over, we're going to walk through setting up a Django project completely Dockerized from scratch. The goal here is to showcase how we can take the implementations we talked about to other web technologies. There are going to be a few roadblocks along the way as well, they're left in here as a way to show _why_ the end result is the way it is.
 
 :::warning
 
@@ -87,19 +87,19 @@ docker build -f Dockerfile -t pythontest .
 
 ## Try installing Django again
 
-We can try to install Django again. This time, we'll change the working directory and bind-mount volume to be a the user profile of the user we added to the Docker image so we know they'll have write access. We also need to use our `pythontest` tag that we set when we built the image.
+We can try to install Django again. This time, we'll change the working directory and bind-mount volume to be the user profile of the user we added to the Docker image, so we know they'll have write access. We also need to use our `pythontest` tag that we set when we built the image.
 
 ```shell
 docker run --rm -w /home/python/app -v ./:/home/python/app --entrypoint=pip --user $UID pythontest install Django
 ```
 
-Django is installed successfully now, so we should freeze these dependencies so their version can be tracked in source control.
+Django is installed successfully now, so we should freeze these dependencies, so their version can be tracked in source control.
 
 ```shell
 docker run --rm -w /home/python/app -v ./:/home/python/app --entrypoint=pip --user $UID pythontest freeze > requirements.txt
 ```
 
-After running that command, the `requirements.txt` file is still empty. This is because the installed dependencies did not persist between container runs. We'll need to make sure those persist so that we don't have to worry about installing each dependency every single time we run a command in the container. Pip is installing the dependencies to `/home/python/.local` and `/home/python/cache`. Both of those directories are outside of the `app` directory, so bind-mounting them in a parent directory might be a little strange. This would be a great opportunity to use a docker volume.
+After running that command, the `requirements.txt` file is still empty. This is because the installed dependencies did not persist between container runs. We'll need to make sure those persist so that we don't have to worry about installing each dependency every single time we run a command in the container. Pip is installing the dependencies to `/home/python/.local` and `/home/python/cache`. Both of those directories are outside the `app` directory, so bind-mounting them in a parent directory might be a little strange. This would be a great opportunity to use a docker volume.
 
 Here is the command for adding those two additional volumes, then install Django again:
 
@@ -113,7 +113,7 @@ Another permission denied error! When a volume is created on a directory in the 
 
 We can solve the permission denied error that we get now if we just make sure the `.cache` and `.local` directories are already created as part of the image with the correct permissions. We just need to add a few lines to the Dockerfile.
 
-While we're add it, we can do the same thing for the `app` directory, then set the working directory for the container in the image so we don't have to specify it in our commands.
+While we're at it, we can do the same thing for the `app` directory, then set the working directory for the container in the image, so we don't have to specify it in our commands.
 
 :::code-group
 
@@ -188,7 +188,7 @@ ENV PATH=$PATH:/home/python/.local/bin
 
 :::
 
-Since a change was made the the Dockerfile, we'll need to rebuild the image. We can just overwrite our test tag for this
+Since a change was made the Dockerfile, we'll need to rebuild the image. We can just overwrite our test tag for this
 
 ```shell
 docker build -f Dockerfile -t pythontest .
@@ -222,7 +222,7 @@ We can start making our lives a bit easier by setting up a docker compose file, 
 touch docker-compose.yml
 ```
 
-The `docker-compose.yml` file will have the following contents (derived from all of the flags that were being used in the previous `docker run` command)
+The `docker-compose.yml` file will have the following contents (derived from all the flags that were being used in the previous `docker run` command)
 
 ```yaml
 services:
@@ -243,7 +243,7 @@ volumes:
   pip-local:
 ```
 
-Create the bin directory as well as two shell scripts that help us wrap running `pip` and any command in the python container service. The shell scripts need to be executable and we can make symlinks to them in the root of the `django` directory.
+Create the bin directory as well as two shell scripts that help us wrap running `pip` and any command in the python container service. The shell scripts need to be executable, and we can make symlinks to them in the root of the `django` directory.
 
 ```shell
 mkdir -p bin
@@ -291,7 +291,7 @@ Test to make sure the python shell script works (You should see "python"):
 
 With Django installed now and some wrapping-shell scripts, we can follow the [Django tutorial](https://docs.djangoproject.com/en/5.1/intro/tutorial01/) for setting up the initial app.
 
-After installing Django, we should have a `django-admin` binary that we can execute to setup the Django project:
+After installing Django, we should have a `django-admin` binary that we can execute to set up the Django project:
 
 ```shell
 ./python django-admin startproject app .
@@ -305,7 +305,7 @@ With Django app created, we can use their development server to run and serve th
 ./python python manage.py runserver
 ```
 
-Now we have the development server up and running and we can see the port that is being used by Django. We'll need to publish that port in the `docker-compose.yml` file
+Now we have the development server up and running, and we can see the port that is being used by Django. We'll need to publish that port in the `docker-compose.yml` file
 
 :::code-group
 
@@ -466,7 +466,7 @@ With Django, and most other web frameworks, migrations need to be executed whene
 - running migrations
 - attaching logs
 
-Here is a start script that does all of these. This can be placed in the `bin` directory and have a symlink created that points to in in the root of the `django` repo.
+Here is a start script that does all of these. This can be placed in the `bin` directory and have a symlink created that points to in the root of the `django` repo.
 
 ```bash
 #!/bin/bash
@@ -483,7 +483,7 @@ docker compose up -d
 docker compose logs -f || docker compose down
 ```
 
-After running `./start` the migrations should apply and you should be able to create a superuser and login to the Django admin @ http://localhost/admin
+After running `./start` the migrations should apply, and you should be able to create a superuser and login to the Django admin @ http://localhost/admin
 
 ```shell
 ./python python manage.py createsuperuser

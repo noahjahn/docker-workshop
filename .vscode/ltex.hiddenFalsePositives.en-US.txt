@@ -1,0 +1,8 @@
+{"rule":"COMMA_COMPOUND_SENTENCE","sentence":"^\\Q::: tip Whenever I use the \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q command, I will add the \\E(?:Dummy|Ina|Jimmy-)[0-9]+\\Q flag, which will automatically remove the container and it's associated anonymous volumes when it exists :::\\E$"}
+{"rule":"A_INSTALL","sentence":"^\\QNode Docker Hub image: https://hub.docker.com/_/node\nExpress install guide: https://expressjs.com/en/starter/installing.html\\E$"}
+{"rule":"A_INSTALL","sentence":"^\\QFollowing the Express install guide, we know we'll need at least Node v18 (we'll just go with LTS though).\\E$"}
+{"rule":"MANY_NN_U","sentence":"^\\QWe get a few permission denied errors, so we should create a user in the Docker image that we can use before continuing on.\\E$"}
+{"rule":"AGREEMENT_SENT_START_2","sentence":"^\\QFirst things first is creating a Dockerfile for us to use.\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qwant to learn how to write or optimize Dockerfiles\nwant to understand how Docker is used locally as well as in production\nwant to be able to troubleshoot Docker containers\nwant to learn new approaches to using Docker\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_RULE","sentence":"^\\QFirst-time/beginner Developers\nDevelopers who don't know what Docker is\\E$"}
+{"rule":"UPPERCASE_SENTENCE_START","sentence":"^\\Qdocker-workshop\\E$"}

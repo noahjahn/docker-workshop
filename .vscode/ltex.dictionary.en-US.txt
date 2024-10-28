@@ -1,0 +1,10 @@
+Vitepress
+UIDs
+yaml
+VSCode
+VSCodium
+wget
+npm
+Dockerized
+sqlite
+Dockerize

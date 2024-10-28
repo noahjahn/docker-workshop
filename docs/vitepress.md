@@ -69,7 +69,7 @@ ADD docs /home/bun/app/docs
 
 :::
 
-Now we just need to add the install and build `RUN` instructions
+Now we just need to add the installation and build `RUN` instructions
 
 ::: code-group
 
@@ -208,7 +208,7 @@ COPY --from=build /home/bun/app/docs/.vitepress/dist /usr/share/nginx/html
 
 :::
 
-Finally, we can build the Dockerfile to an image and give a tag so we can run it to test it
+Finally, we can build the Dockerfile to an image and give a tag, so we can run it to test it
 
 ```shell
 docker build -t docker-workshop-production -f Dockerfile.production .

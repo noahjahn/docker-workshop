@@ -41,7 +41,7 @@ By default, `docker compose run` will not publish the mapped service ports, so w
 
 ## Custom Dockerfile
 
-The docker-compose file can be updated to to reference the custom Dockerfile that we created previous as well. This is super useful for local development, since you don't have to worry about tagging the image at all, docker will infer the name of the image to build based on the directory name that it's in.
+The docker-compose file can be updated to reference the custom Dockerfile that we created previous as well. This is super useful for local development, since you don't have to worry about tagging the image at all, docker will infer the name of the image to build based on the directory name that it's in.
 
 ::: code-group
 
@@ -81,7 +81,7 @@ If anything changes in the `Dockerfile`, you will have to explicitly tell Docker
 
 ## Updating shell scripts
 
-We can also update the `bun.sh` shell script now to use `docker compose run` commands instead of just `docker run`. We can also make sure that `docker compose build` is executed so we don't have to think about it for future commands.
+We can also update the `bun.sh` shell script now to use `docker compose run` commands instead of just `docker run`. We can also make sure that `docker compose build` is executed, so we don't have to think about it for future commands.
 
 :::code-group
 
@@ -156,13 +156,13 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
-      POSTGRES_USER: ${DB_USER:-directus}
+      POSTGRES_USER: ${DB_USER:-postgres}
       POSTGRES_PASSWORD: secret
-      POSTGRES_DB: ${DB_DATABASE:-directus}
+      POSTGRES_DB: ${DB_DATABASE:-postgres}
 ```
 
 ## Networking
 
-When using docker compose, each of those services that are defined in the map are going to by default be part of the same docker network. They are also going to be able to communicate with each other. Docker compose will create some custom DNS for the reaching each container by it's defined service name.
+When using docker compose, each of those services that are defined in the map are going to by default be part of the same docker network. They are also going to be able to communicate with each other. Docker compose will create some custom DNS for the reaching each container by its defined service name.
 
-What this means is, if the app running the the `bun` service required a database connection, it could reference the database by it's service name as `database`. If it was using environment variables then, it would might have it's configuration of `DB_HOST` set to "database".
+What this means is, if the app running the `bun` service required a database connection, it could reference the database by its service name as `database`. If it was using environment variables then, it might have its configuration of `DB_HOST` set to "database".

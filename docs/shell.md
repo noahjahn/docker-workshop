@@ -65,9 +65,9 @@ Even simpler now, you can just call `./bun i` to install dependencies, which is 
 
 ## Pull
 
-Previously, I had mentioned that you might have to pull down a new image. This is especially true when the image tag that is referenced and being used is just the `latest` tag. Just specifying `oven/bun` as our image name is the same as specifying the image with the `latest` tag (`oven/bun:latest`). That tag will continue to be updated as new features or fixes are published to to the software that is being used.
+Previously, I had mentioned that you might have to pull down a new image. This is especially true when the image tag that is referenced and being used is just the `latest` tag. Just specifying `oven/bun` as our image name is the same as specifying the image with the `latest` tag (`oven/bun:latest`). That tag will continue to be updated as new features or fixes are published to the software that is being used.
 
-Similarly to how you might need to `git pull` from a branch to pull down the latest code of a repository you're working on,to make sure we're always running the true "latest" version we'll want to `docker pull NAME[:TAG|@DIGEST]` before we run our docker commands. Instead of having to remember this every time we run a docker command in our project, a good idea will be to just add the pull command to shell script
+Similarly to how you might need to `git pull` from a branch to pull down the latest code of a repository you're working on, to make sure we're always running the true "latest" version we'll want to `docker pull NAME[:TAG|@DIGEST]` before we run our docker commands. Instead of having to remember this every time we run a docker command in our project, a good idea will be to just add the pull command to shell script
 
 ::: code-group
 

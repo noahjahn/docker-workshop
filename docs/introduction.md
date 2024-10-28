@@ -11,7 +11,7 @@ Welcome to the beginning of the Docker workshop! These docs are meant to help gu
 > This workshop is originally created for the Docker Workshop GR Web Dev event on October 28th, 2024.
 
 ::: info
-These docs were built using Vitepress and are hosted on GitHub Pages. The notes, examples, guides, and all of this content is available online publicly @ https://docker-workshop.noahjahn.dev
+These docs were built using Vitepress and are hosted on GitHub Pages. The notes, examples, guide, and all of this content is available online publicly @ https://docker-workshop.noahjahn.dev
 :::
 
 ::: warning Prerequisites!

@@ -1,10 +1,10 @@
 # Dockerfiles
 
-So far, we've been pulling from existing Docker images. Sometimes though, the image that you're pulling from my not have all of the OS-level dependencies that are required for you app work completely.
+So far, we've been pulling from existing Docker images. Sometimes though, the image that you're pulling from may not have all the OS-level dependencies that are required for your app to work completely.
 
-As an example Vitepress has a feature that allows last updated date and timestamps to be shown on the documentation page. Essentially, it uses git under the hood to check the source code for the page you're viewing to see when the last commit was. The `oven/bun` image does not include `git`, so we can create a Dockerfile that pulls from the base image to add that dependency.
+As an example, Vitepress has a feature that allows last updated date and timestamps to be shown on the documentation page. Essentially, it uses git under the hood to check the source code for the page you're viewing to see when the last commit was. The `oven/bun` image does not include `git`, so we can create a Dockerfile that pulls from the base image to add that dependency.
 
-To start, open the `docs/.vitepress/config.mts` file and had the `lastUpdated` flag to the config object:
+To start, open the `docs/.vitepress/config.mts` file and add the `lastUpdated` flag to the config object:
 
 ```diff
   ...
@@ -15,7 +15,7 @@ To start, open the `docs/.vitepress/config.mts` file and had the `lastUpdated` f
 });
 ```
 
-After that saves and the vitepress server reloads (or if the dev server isn't running you can start it now with `./bun docs:dev`), open up the docs site and try to load one of the documentation pages. You should see an error saying that `git` cannot be found.
+After that saves and the Vitepress server reloads (or if the dev server isn't running you can start it now with `./bun docs:dev`), open up the docs site and try to load one of the documentation pages. You should see an error saying that `git` cannot be found.
 
 ## Dockerfile
 
@@ -69,16 +69,16 @@ docker build -f Dockerfile .
 ```
 
 :::info
-The `-f` flag here is just going to be the path the file that we want to build
+The `-f` flag here is just going to be the path to the file that we want to build
 :::
 
 :::info
-The `.` in this case is the build context. This is important if you are execution `COPY` or `ADD` instructions, since the context is going to be the path from which the build will look for files to be copied from on the host.
+The `.` in this case is the build context. This is important if you are use the `COPY` or `ADD` instructions since the context is going to be the path from which the build will look for files to be copied from on the host.
 :::
 
 ### Tagging
 
-The image you build doesn't actually have a tag right now, so we can use it. We can add the `-t` flag to give it a name that we can reference it by
+The image you build doesn't actually have a tag right now, so we can't use it. We can add the `-t` flag to give it a name that we can reference it by
 
 ```shell
 docker build -t docker-workshop -f Dockerfile .
@@ -127,7 +127,7 @@ docker run --rm -v ./:/home/bun/app -p 5173:5173 --user $UID -it $IMAGE $@
 
 :::
 
-If you haven't already, send an interrupt to the vitepress dev server terminal, then start it up again. This time, it should be using your custom image and the last updated feature should be working.
+If you haven't already, send an interrupt to the Vitepress dev server terminal, then start it up again. This time, it should be using your custom image and the last updated feature should be working.
 
 ```shell
 ./bun docs:dev
@@ -135,7 +135,7 @@ If you haven't already, send an interrupt to the vitepress dev server terminal, 
 
 ## Optimizing Dockerfiles
 
-I mentioned briefly that Dockerfiles just contain a set of instructions and each of those instructions correspond to a layer on the image. When an image is built, each one of those layers get stored in Docker's build cache on your computer. That cache is there to help improve build times. The cache for a layer is broken when a previous layer _above_ the instruction has changed. Any instruction that is defined after the instruction that changed will have it's cache broken and it will need to be re-built.
+I mentioned briefly that Dockerfiles just contain a set of instructions and each of those instructions correspond to a layer on the image. When an image is built, each one of those layers get stored in Docker's build cache on your computer. That cache is there to help improve build times. The cache for a layer is broken when a previous layer _above_ the instruction has changed. Any instruction that is defined after the instruction that changed will have its cache broken, and it will need to be rebuilt.
 
 Keeping the caching layer aspect in mind there are a number of ways Dockerfiles can be optimized, but they are going to be app specific.
 
@@ -170,7 +170,7 @@ Having more layers gives the image more of an opportunity to actually use each l
 
 ### Copy files intelligently
 
-The `COPY` instruction might contain all of the source code that reads those two files that get created. Perhaps the `src` directory has a bunch of different sub-directories though and some of those sub-directories don't change as often as the others. Maybe there is a system library or configuration directory of some sort that doesn't change as often. That `COPY` instruction could be broken up into multiple instructions:
+The `COPY` instruction might contain all the source code that reads those two files that get created. Perhaps the `src` directory has a bunch of different subdirectories though and some of those subdirectories don't change as often as the others. Maybe there is a system library or configuration directory of some sort that doesn't change as often. That `COPY` instruction could be broken up into multiple instructions:
 
 ```Dockerfile
 COPY src/system /app/system
