@@ -153,6 +153,8 @@ COPY src /app
 
 ```
 
+### Create more layers
+
 The `RUN` instruction kind of long, and could possibly be broken up into a few different layers to become:
 
 ```Dockerfile
@@ -166,6 +168,8 @@ RUN curl https://www.google.com > /app/curl.www.google.com.html && \
 Having more layers gives the image more of an opportunity to actually use each layers cache.
 :::
 
+### Copy files intelligently
+
 The `COPY` instruction might contain all of the source code that reads those two files that get created. Perhaps the `src` directory has a bunch of different sub-directories though and some of those sub-directories don't change as often as the others. Maybe there is a system library or configuration directory of some sort that doesn't change as often. That `COPY` instruction could be broken up into multiple instructions:
 
 ```Dockerfile
@@ -174,4 +178,27 @@ COPY src/config /app/config
 COPY src/models /app/models
 COPY src/controllers /app/controllers
 COPY src/services /app/services
+```
+
+### Multi-stage builds
+
+The code copying and curl/wget requests could be separated into multi-stage builds. The multi-staging build will let more than one set of layers be built simultaneously, up to the point where one image might depend on another.
+
+```Dockerfile
+FROM debian AS build
+
+RUN apt update && apt install -y curl wget
+
+RUN curl https://www.google.com > /app/curl.www.google.com.html && \
+  wget https://www.google.com
+
+FROM oven/bun AS runtime
+
+COPY src/system /app/system
+COPY src/config /app/config
+COPY src/models /app/models
+COPY src/controllers /app/controllers
+COPY src/services /app/services
+COPY --from=build /app/curl.www.google.com.html ./app/curl.www.google.com.html
+COPY --from=build /app/index.html ./app/wget.www.google.com.html
 ```
