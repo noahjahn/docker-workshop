@@ -39,8 +39,130 @@ By default, `docker compose run` already allocates a pseudo-TTY, so it doesn't n
 By default, `docker compose run` will not publish the mapped service ports, so we still need to be explicit here. `-P` is a shortened flag for `--service-ports`.
 :::
 
+## Custom Dockerfile
+
+The docker-compose file can be updated to to reference the custom Dockerfile that we created previous as well. This is super useful for local development, since you don't have to worry about tagging the image at all, docker will infer the name of the image to build based on the directory name that it's in.
+
+::: code-group
+
+```diff
+services:
+  bun:
+-   image: oven/bun
++   build:
++     context: .
++     dockerfile: Dockerfile
+    user: bun:bun
+    ports:
+      - ${DOCS_MAPPED_PORT:-5173}:5173
+    volumes:
+      - ./:/home/bun/app
+```
+
+```yaml
+services:
+  bun:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: bun:bun
+    ports:
+      - ${DOCS_MAPPED_PORT:-5173}:5173
+    volumes:
+      - ./:/home/bun/app
+```
+
+:::
+
+:::warning
+
+If anything changes in the `Dockerfile`, you will have to explicitly tell Docker to rebuild that image with `docker compose build`
+:::
+
+## Updating shell scripts
+
+We can also update the `bun.sh` shell script now to use `docker compose run` commands instead of just `docker run`. We can also make sure that `docker compose build` is executed so we don't have to think about it for future commands.
+
+:::code-group
+
+```diff
+#!/bin/bash
+-IMAGE=docker-workshop:latest
+
+-docker pull $IMAGE
+-docker run --rm -v ./:/home/bun/app -p 5173:5173 --user $UID -it $IMAGE $@
++docker compose pull
++docker compose build
++docker compose run --rm --service-ports bun $@
+
+```
+
+```bash
+#!/bin/bash
+
+docker compose pull
+docker compose build
+docker compose run --rm --service-ports bun $@
+```
+
 ## Multiple services
 
-Docker compose also allows us to define more than one services, which is especially useful for an app that has external dependencies, like a database.
+Docker compose also allows us to define more than one services, which is especially useful for an app that has external service dependencies, like a database.
 
-TODO: more in-depth about this with some examples
+You can specify more services in the `services` map of the docker-compose file and each one of those services.
+
+Just as an example, if for some reason we wanted the base bun image and the custom image we created from the bun image, we could do something like this:
+
+```yaml
+services:
+  bunwithgit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: bun:bun
+    ports:
+      - 5173:5173
+    volumes:
+      - ./:/home/bun/app
+  bun:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: bun:bun
+    ports:
+      - 5174:5173
+    volumes:
+      - ./:/home/bun/app
+```
+
+Or, if this project required a database, we could also add that as a service:
+
+```yaml
+services:
+  bun:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    user: bun:bun
+    ports:
+      - ${DOCS_MAPPED_PORT:-5173}:5173
+    volumes:
+      - ./:/home/bun/app
+  database:
+    image: postgres:17
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: ${DB_USER:-directus}
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: ${DB_DATABASE:-directus}
+```
+
+## Networking
+
+When using docker compose, each of those services that are defined in the map are going to by default be part of the same docker network. They are also going to be able to communicate with each other. Docker compose will create some custom DNS for the reaching each container by it's defined service name.
+
+What this means is, if the app running the the `bun` service required a database connection, it could reference the database by it's service name as `database`. If it was using environment variables then, it would might have it's configuration of `DB_HOST` set to "database".
