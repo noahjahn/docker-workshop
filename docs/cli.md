@@ -117,7 +117,9 @@ The left-hand side of the `:` specifies the path on the host machine, your compu
 
 ::: danger
 If you notice, after running `ls -al`, the `node_modules` directory and the `bun.lockb` file are going to have the owner and group `root`. Typically, containers should be run as a non-root user even in production. Locally, it's a great idea to run the container as the same user as your user ID on the host computer.
+:::
 
+::: danger
 It's also important to note that, in general, you _shouldn't_ have to execute docker commands as root with `sudo`.
 :::
 
