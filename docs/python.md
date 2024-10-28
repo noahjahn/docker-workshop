@@ -231,8 +231,6 @@ services:
       dockerfile: Dockerfile
       context: .
     user: python
-    ports:
-      - 8000:8000
     volumes:
       - ./:/home/python/app
       - pip-cache:/home/python/.cache
@@ -361,8 +359,7 @@ The ports are published now, but we still can't get to http://localhost:8000 in 
 ./python python manage.py runserver 0.0.0.0:8000
 ```
 
-The app still can't be reached, and if we take a look at the output of `docker ps` we'll notice the container isn't actually publishing any ports. This is because we are using the `docker compose run` command, which by default doesn't map service ports. We'll need to update the `python.sh` file with the `--service-ports` flag for this to work. We might as well do the same with the `pip.sh` file as well.
-
+The app still can't be reached, and if we take a look at the output of `docker ps` we'll notice the container isn't actually publishing any ports. This is because we are using the `docker compose run` command, which by default doesn't map service ports. We'll need to update the `python.sh` file with the `--service-ports` flag for this to work.
 Here is the `python.sh` file:
 
 :::code-group
@@ -379,27 +376,6 @@ Here is the `python.sh` file:
 #!/bin/bash
 
 docker compose run --rm --service-ports python $@
-
-```
-
-:::
-
-Here is the `pip.sh` file:
-
-:::code-group
-
-```diff
-#!/bin/bash
-
--docker compose run --rm --entrypoint=python python -m pip $@
-+docker compose run --rm --service-ports --entrypoint=python python -m pip $@
-
-```
-
-```bash
-#!/bin/bash
-
-docker compose run --rm --service-ports --entrypoint=python python -m pip $@
 
 ```
 
@@ -450,6 +426,29 @@ WORKDIR /home/python/app
 ENV PATH=$PATH:/home/python/.local/bin
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+```
+
+:::
+
+Since we have the `CMD` instruction the Dockerfile now, we should remove the `--service-ports` flag that we previously added. Running a `docker compose up` will publish the ports for us automatically and the `docker compose run` command will likely be just running scripts internally in the the container without the need to publish the ports. If we leave them published, we'll run into an error with the port already being used when running a command after running `docker compose up`
+
+Here is the `python.sh` file now:
+
+:::code-group
+
+```diff
+#!/bin/bash
+
+-docker compose run --rm --service-ports python $@
++docker compose run --rm python $@
+
+```
+
+```bash
+#!/bin/bash
+
+docker compose run --rm python $@
 
 ```
 

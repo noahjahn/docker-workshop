@@ -1,8 +1,8 @@
 # Hosting these docs in a container
 
-These docs are currently build and then statically hosted using GitHub pages, but I think it would be cool to also show you what it might look like to host these on your own from a container.
+These docs are currently built and then statically hosted using GitHub pages, but I think it would be cool to also show you what it might look like to host these on your own from a container.
 
-There is already a build process, so we can take what is there and throw the steps that are run in a pipeline for build the docs into a Dockerfile. We will also need a web server that can serve static files. We'll use nginx for this.
+There is already a build process, so we can take what is there and throw the steps that are run in a pipeline for building the docs into a Dockerfile. We will also need a web server that can serve static files. We'll use nginx for this.
 
 ## Building the static site
 
@@ -39,7 +39,7 @@ RUN apt update && apt install -y git
 
 :::
 
-We'll need to install bun dependencies and the run the build script, but before that we'll need to get the code in the repo. To keep the size of the image as small as possible, we can intelligently include the files and directories that are actually needed to build the server.
+We'll need to install bun dependencies and then run the build script, but before that we'll need to get the code in the repo. To keep the size of the image as small as possible, we can intelligently include the files and directories that are actually needed to build the server.
 
 ::: code-group
 
@@ -208,7 +208,7 @@ COPY --from=build /home/bun/app/docs/.vitepress/dist /usr/share/nginx/html
 
 :::
 
-Finally, we can build the Dockerfile to an image and give a tag, so we can run it to test it
+Finally, we can build the Dockerfile to an image and give it a tag, so we can run it to test it
 
 ```shell
 docker build -t docker-workshop-production -f Dockerfile.production .

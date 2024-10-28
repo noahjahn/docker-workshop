@@ -11,7 +11,7 @@ To start, open the `docs/.vitepress/config.mts` file and add the `lastUpdated` f
     },
   },
   ignoreDeadLinks: 'localhostLinks',
-+  lastUpdated: true,
++ lastUpdated: true,
 });
 ```
 

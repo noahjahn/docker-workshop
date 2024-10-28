@@ -64,7 +64,7 @@ Still following the Express guide, we can add the [Hello World](https://expressj
 We can create a `app.js` file in the `express` directory.
 
 ```shell
-touch express/app.js
+touch app.js
 ```
 
 Then we can write the following content to the file:
@@ -88,9 +88,14 @@ app.listen(port, () => {
 We can see that the port that the app will be listening on is port 3000, so we can write a `docker run` command to test this out.
 
 ```shell
-docker run --rm -it -w /home/node/app -v ./:/home/node/app -p 3000:3000 --user node node:lts node app.js
+docker run --rm --init -w /home/node/app -v ./:/home/node/app -p 3000:3000 --user node node:lts node app.js
 
 ```
+
+::: info
+
+I added the `--init` flag here because the container wasn't responding to ctrl+c signals.
+:::
 
 You should be able to see "Hello World" in your browser now if you go to http://localhost:3000
 
@@ -99,7 +104,7 @@ You should be able to see "Hello World" in your browser now if you go to http://
 We can start making our lives a bit easier by setting up a docker compose file, so we don't have to remember all of these flags that need to be included during a run command, then set up shell scripts to wrap the `docker compose` commands after that.
 
 ```shell
-touch express/docker-compose.yml
+touch docker-compose.yml
 ```
 
 The `docker-compose.yml` file will have the following contents (derived from all the flags that were being used in the previous `docker run` command)
@@ -111,6 +116,7 @@ services:
     user: node
     ports:
       - 3000:3000
+    init: true
     working_dir: /home/node/app
     volumes:
       - ./:/home/node/app
@@ -119,7 +125,6 @@ services:
 Create the bin directory as well as two shell scripts that help us wrap running `npm` and any command in the node container service. The shell scripts need to be executable, and we can make symlinks to them in the root of the `express` directory.
 
 ```shell
-cd express
 mkdir -p bin
 touch bin/npm.sh bin/node.sh
 chmod +x bin/*.sh
@@ -150,7 +155,7 @@ Contents of the `node.sh` file:
 
 mkdir -p node_modules
 
-docker compose run --rm --service-ports --entrypoint=node node $@
+docker compose run --init --rm --service-ports --entrypoint=node node $@
 
 ```
 
