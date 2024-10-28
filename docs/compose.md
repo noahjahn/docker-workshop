@@ -32,7 +32,7 @@ docker compose run --rm -i -P bun docs:dev
 Where `bun` is the keyed service name.
 
 ::: tip
-By default, `docker compose run` already allocates a psuedo-TTY, so it doesn't need to be explicitly specified.
+By default, `docker compose run` already allocates a pseudo-TTY, so it doesn't need to be explicitly specified.
 :::
 
 ::: tip
@@ -41,6 +41,6 @@ By default, `docker compose run` will not publish the mapped service ports, so w
 
 ## Multiple services
 
-Docker compose also allows us to define more than one services, which is especially useful for an app that has external dependencies like a database.
+Docker compose also allows us to define more than one services, which is especially useful for an app that has external dependencies, like a database.
 
 TODO: more in-depth about this with some examples

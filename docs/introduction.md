@@ -1,3 +1,9 @@
+---
+next:
+  text: 'Docker CLI'
+  link: '/cli'
+---
+
 # Docker workshop
 
 Welcome to the beginning of the Docker workshop! These docs are meant to help guide you through learning some topics around Docker, to help you become more comfortable using, troubleshooting, and creating cool things with Docker containers.
@@ -9,7 +15,7 @@ These docs were built using Vitepress and are hosted on GitHub Pages. The notes,
 :::
 
 ::: warning Prerequisites!
-If you haven't already, check-out the [prerequisites](/prerequisites) before continuing on
+If you haven't already, check-out the <a href="/prerequisites" target="_blank">Prerequisites</a> before continuing on
 :::
 
 ## Who am I?
@@ -36,7 +42,7 @@ If you feel like you fall under this category, please stick around and soak up a
 
 ## Introduction
 
-This workshop will dive into a few different topics about Docker. It will provide you with real world examples that you can take to any of your projects that you're currently working on and give you insights into how I use Docker myself. The goal here is to give you more tools, ideas, and approaches to Docker to become an advanced user.
+This workshop will dive into a few different topics about Docker. It will provide you with real world examples that you can take to any of your projects that you're currently working on and give you insights into how I use Docker myself. The goal here is to give you more tools, ideas, and approaches to Docker to become an advanced user and make your daily workflows more efficient.
 
 If you've used Docker before, you may have been given a project to spin up locally using Docker, probably with a `docker-compose.yml` file and were just told to run `docker compose up`. This workshop is going to help you understand more about that `docker-compose.yml` file, how it was crafted, why there are different services in place, and give you different ways to work with the services defined for the project.
 

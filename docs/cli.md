@@ -1,3 +1,9 @@
+---
+prev:
+  text: 'Introduction'
+  link: '/introduction'
+---
+
 # Docker CLI
 
 To start showcasing the Docker CLI, I'm going to work through a few examples of setting up and working with this repo with some `docker` commands.
@@ -16,10 +22,10 @@ Ensure you can run `docker` from the terminal (you should see a printed out Dock
 docker --version
 ```
 
-> This project contains docs written in Markdown, which get parsed and built into static HTML files by Vitepress. [Bun](https://bun.sh/) is currently used for the package manager as well as for any build and run-time tasks.
+> This project contains docs written in Markdown, which get parsed and built into static HTML files by [Vitepress](https://vitepress.dev/). [Bun](https://bun.sh/) is currently used for the package manager as well as for any build and run-time tasks.
 
 ::: info
-I chose Bun, hoping that most of us wouldn't already have it installed on our systems. We can see how we can take advantage of Docker to still run this project without having to install any host or OS level dependencies. Outside of Docker, of course.
+I chose Bun, hoping that most of us wouldn't already have it installed on our system. The goal being: we can see how to take advantage of Docker to still run this project without having to install any host or OS level dependencies. Outside of Docker, of course.
 :::
 
 ## Install bun packages
@@ -42,7 +48,7 @@ If you don't already have the `oven/bun` Docker image pulled down then the curre
 `docker run` doesn't pull the latest image for you, so you may be running an older `oven/bun` image version. You can make sure to download the latest image by running `docker pull oven/bun`
 :::
 
-You should receive an error saying `MissingPackageJSON`. This is because we are executing `bun i` _inside_ the container, which doesn't know anything about the current directory that we executed the command from.
+You should receive an error saying something about the `package.json` file could not be found. This is because we are executing `bun i` _inside_ the container, which doesn't know anything about the current directory that we executed the command from. So, even though there is a `package.json` file in the repo, the location that the `bun i` command is actually executed _does not_ contain the `package.json` file.
 
 ## List containers
 
@@ -70,11 +76,11 @@ Whenever I use the `docker run` command, I will add the `--rm` flag, which will 
 
 ## Volumes
 
-The container needs to know about the `package.json` that we have in the repo. One way to approach this is to create a bind-mount docker volume. But we need to know what the working directory is for the bun container.
+The container needs to know about the `package.json` that we have in the repo. One way to approach this is to create a bind-mount docker volume. But we need to know what the working directory is to for the bun image that we're using.
 
 ::: info
 
-The bind-mount volume is a great approach to local development. The directory that is bind-mounted will stay up-to-date with any changes that are made in that directory in the container.
+The bind-mount volume is a great feature to use in local development. The directory that is bind-mounted will stay up-to-date with any changes that are made in that directory in the container.
 :::
 
 A quick way to figure out the working directory of the Docker image you're using would be to execute the `pwd` command inside the container. Specifically with this container though, the `entrypoint` is configured to be the `bun` executable. So we'll need to make sure to override that in our `docker run` command:
@@ -138,11 +144,13 @@ Now, we can run the docker run command with the `--user` flag
 docker run --rm -v ./:/home/bun/app --user $UID oven/bun i
 ```
 
+To confirm permissions are correct, run the `ls -al` command again and you should see the `node_modules` directory is created as your user.
+
 ## Publish
 
-At this point the packages to run `vitepress` to build, serve, or preview these docs locally should all be downloaded and in place now. Looking at the `package.json` file, there is a `docs:dev` script, that will run the `vitepress` development server for the docs.
+At this point, the packages to run `vitepress` to build, serve, or preview these docs locally should all be downloaded and in place now. Looking at the `package.json` file, there is a `docs:dev` script, that will run the `vitepress` development server for the docs.
 
-We can run the `docs:dev` script using [`bun run`](https://bun.sh/docs/cli/run#run-a-package-json-script) with our `docker run command`
+We can run the `docs:dev` script using [`bun run`](https://bun.sh/docs/cli/run#run-a-package-json-script) with our `docker run` command:
 
 ```shell
 docker run --rm -v ./:/home/bun/app --user $UID oven/bun docs:dev
@@ -170,13 +178,13 @@ The Vitepress dev server provides some interactive commands that can be used whi
 
 If you haven't already, you can send the interrupt signal with `ctrl+c` or `cmd+c` again in your terminal that's running the container
 
-We can allocate a psuedo-TTY with the `-t` flag:
+We can allocate a pseudo-TTY with the `-t` flag:
 
 ```shell
 docker run --rm -v ./:/home/bun/app -p 5173:5173 --user $UID -t oven/bun docs:dev
 ```
 
-You should see some colors on the terminal now, as well as `press h to show help` from `vitepress`. The container still isn't accepting any input from you though, it's still just display stdout
+You should see some colors on the terminal now, as well as `press h to show help` from `vitepress`. The container still isn't accepting any input from you though, it's still just displaying its stdout.
 
 Send the interrupt signal with `ctrl+c` or `cmd+c` again in your terminal that's running the container.
 
@@ -194,7 +202,7 @@ Now typing `h` with the vitepress container terminal in focus, should actually a
 
 ## Exec
 
-Sometimes, you won't need to run a separate docker container for a command. For example; if you have an existing container running, that is executing a script that is writing files to a temporary location in the container, and you want to list the files in that temporary directory, you can do so using `docker exec`.
+Sometimes, you won't need to run a separate docker container for a command. For example: if you have an existing container running, that is executing a script that is writing files to a temporary location in the container, and you want to list the files in that temporary directory, you can do so using `docker exec`.
 
 First though, you'll need to grab the container ID. In a new terminal, run:
 
@@ -208,7 +216,7 @@ Copy the ID of the bun container that is running and paste it in place of `CONTA
 docker exec CONTAINER ls -al /tmp
 ```
 
-This will execute `ls -al /tmp` inside the container and the close the shell once it's complete. It will not stop or exit the container.
+This will execute `ls -al /tmp` inside the container and then close the shell once it's complete. It will not stop or exit the container.
 
 ::: tip run vs exec
 

@@ -1,3 +1,10 @@
+---
+prev: false
+next: false
+navbar: false
+sidebar: false
+---
+
 # Prerequisites
 
 > Before diving into some information about Docker and working through some examples of using it in the real world, you'll need to have a few things installed to get up and running. We also assume a few things about your environment. Those will be listed here too.
