@@ -50,12 +50,12 @@ export default defineConfig({
             link: '/vitepress',
           },
           {
-            text: 'Node.js example',
-            link: '/nodejs',
-          },
-          {
             text: 'Python example',
             link: '/python',
+          },
+          {
+            text: 'Node.js example',
+            link: '/nodejs',
           },
         ],
       },
@@ -68,4 +68,5 @@ export default defineConfig({
     },
   },
   ignoreDeadLinks: 'localhostLinks',
+  lastUpdated: true,
 });
