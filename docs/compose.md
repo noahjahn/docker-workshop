@@ -105,6 +105,8 @@ docker compose build
 docker compose run --rm --service-ports bun $@
 ```
 
+:::
+
 ## Multiple services
 
 Docker compose also allows us to define more than one services, which is especially useful for an app that has external service dependencies, like a database.
