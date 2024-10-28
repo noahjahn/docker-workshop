@@ -13,7 +13,7 @@ To start showcasing the Docker CLI, I'm going to work through a few examples of 
 If you plan to follow along, and you haven't already, take a moment to clone down this repo:
 
 ```shell
-git clone git@github.com:noahjahn/docker-workshop.git && cd docker-workshop
+git clone https://github.com/noahjahn/docker-workshop.git && cd docker-workshop
 ```
 
 Ensure you can run `docker` from the terminal (you should see a printed out Docker version and build number):
