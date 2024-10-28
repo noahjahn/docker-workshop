@@ -12,8 +12,6 @@ Docker Desktop provides a nice interface for local development. You can easily s
 
 ![Docker Desktop images](assets/desktop/images.png)
 
-TODO: discuss more about how I used images here
-
 ## Volume management
 
 ![Docker Desktop volumes](assets/desktop/volumes.png)
