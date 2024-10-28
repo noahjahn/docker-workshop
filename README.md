@@ -1,15 +1,11 @@
 # docker-workshop
 
-To install dependencies:
+A guided set of notes and examples for using Docker
 
-```bash
-bun install
+Docker workshop repo, guide, and docs compiled for a GR Web Dev event
+
+## Developing locally
+
+```shell
+docker run --rm -v ./:/home/bun/app -p 5173:5173 --user $UID -it oven/bun docs:dev
 ```
-
-To run:
-
-```bash
-bun run index.js
-```
-
-This project was created using `bun init` in bun v1.1.27. [Bun](https://bun.sh) is a fast all-in-one JavaScript runtime.
